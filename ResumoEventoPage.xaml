@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppEventos.Views.ResumoEventoPage"
+             Title="Resumo do Evento"
+             BackgroundColor="#F4F6FF">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="14">
+
+            <!-- Cabeçalho de confirmação -->
+            <Border BackgroundColor="#2C3E8C" Padding="20,18">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="14"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                    <Label Text="✅" FontSize="40" HorizontalOptions="Center"/>
+                    <Label Text="Evento Cadastrado!"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center"/>
+                    <!-- Binding direto no XAML via StringFormat -->
+                    <Label Text="{Binding Nome, StringFormat='&quot;{0}&quot;'}"
+                           FontSize="13"
+                           TextColor="#A8B8F0"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Card: Informações gerais -->
+            <Border BackgroundColor="White" Stroke="#D0D8F5" StrokeThickness="1" Padding="16">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="📋 Informações do Evento"
+                           FontSize="15" FontAttributes="Bold" TextColor="#2C3E8C"/>
+                    <BoxView HeightRequest="1" Color="#E8EDFB"/>
+
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto"
+                          ColumnSpacing="10" RowSpacing="8">
+                        <Label Grid.Row="0" Grid.Column="0"
+                               Text="Nome:" TextColor="#666" FontSize="13"/>
+                        <!-- Binding com StringFormat conforme Agenda 15 -->
+                        <Label Grid.Row="0" Grid.Column="1"
+                               Text="{Binding Nome}"
+                               FontAttributes="Bold" FontSize="13" TextColor="#222"/>
+
+                        <Label Grid.Row="1" Grid.Column="0"
+                               Text="Local:" TextColor="#666" FontSize="13"/>
+                        <Label Grid.Row="1" Grid.Column="1"
+                               Text="{Binding Local}"
+                               FontAttributes="Bold" FontSize="13" TextColor="#222"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Card: Período e duração -->
+            <Border BackgroundColor="White" Stroke="#D0D8F5" StrokeThickness="1" Padding="16">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="📅 Período e Duração"
+                           FontSize="15" FontAttributes="Bold" TextColor="#2C3E8C"/>
+                    <BoxView HeightRequest="1" Color="#E8EDFB"/>
+
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto"
+                          ColumnSpacing="10" RowSpacing="8">
+
+                        <Label Grid.Row="0" Grid.Column="0"
+                               Text="Início:" TextColor="#666" FontSize="13"/>
+                        <!-- StringFormat com data dd/MM/yyyy -->
+                        <Label Grid.Row="0" Grid.Column="1"
+                               Text="{Binding DataInicio, StringFormat='{0:dd/MM/yyyy}'}"
+                               FontAttributes="Bold" FontSize="13" TextColor="#222"/>
+
+                        <Label Grid.Row="1" Grid.Column="0"
+                               Text="Término:" TextColor="#666" FontSize="13"/>
+                        <Label Grid.Row="1" Grid.Column="1"
+                               Text="{Binding DataTermino, StringFormat='{0:dd/MM/yyyy}'}"
+                               FontAttributes="Bold" FontSize="13" TextColor="#222"/>
+
+                        <Label Grid.Row="2" Grid.Column="0"
+                               Text="Duração:" TextColor="#666" FontSize="13"/>
+                        <!-- Propriedade calculada com TimeSpan -->
+                        <Label Grid.Row="2" Grid.Column="1"
+                               Text="{Binding DuracaoFormatada}"
+                               FontAttributes="Bold" FontSize="13" TextColor="#2C3E8C"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Card: Participantes -->
+            <Border BackgroundColor="White" Stroke="#D0D8F5" StrokeThickness="1" Padding="16">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="👥 Participantes e Custos"
+                           FontSize="15" FontAttributes="Bold" TextColor="#2C3E8C"/>
+                    <BoxView HeightRequest="1" Color="#E8EDFB"/>
+
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto"
+                          ColumnSpacing="10" RowSpacing="8">
+
+                        <Label Grid.Row="0" Grid.Column="0"
+                               Text="Participantes:" TextColor="#666" FontSize="13"/>
+                        <!-- StringFormat com sufixo de texto -->
+                        <Label Grid.Row="0" Grid.Column="1"
+                               Text="{Binding NumParticipantes, StringFormat='{0} pessoa(s)'}"
+                               FontAttributes="Bold" FontSize="13" TextColor="#222"/>
+
+                        <Label Grid.Row="1" Grid.Column="0"
+                               Text="Custo/pessoa:" TextColor="#666" FontSize="13"/>
+                        <!-- StringFormat com moeda -->
+                        <Label Grid.Row="1" Grid.Column="1"
+                               Text="{Binding CustoPorParticipante, StringFormat='R$ {0:F2}'}"
+                               FontAttributes="Bold" FontSize="13" TextColor="#222"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Card Total — destaque -->
+            <Border BackgroundColor="#2C3E8C" Padding="20">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                    <Label Text="💰 Custo Total do Evento"
+                           FontSize="14"
+                           TextColor="#A8B8F0"
+                           HorizontalOptions="Center"/>
+                    <!-- StringFormat com moeda brasileira -->
+                    <Label Text="{Binding CustoTotal, StringFormat='R$ {0:F2}'}"
+                           FontSize="28"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center"/>
+                    <Label Text="{Binding DuracaoFormatada, StringFormat='calculado para {0}'}"
+                           FontSize="11"
+                           TextColor="#A8B8F0"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Botão novo cadastro -->
+            <Button Text="Cadastrar Novo Evento"
+                    Clicked="Button_Novo_Clicked"
+                    BackgroundColor="#2C3E8C"
+                    TextColor="White"
+                    CornerRadius="10"
+                    FontAttributes="Bold"
+                    HeightRequest="50"
+                    Margin="0,6,0,20"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

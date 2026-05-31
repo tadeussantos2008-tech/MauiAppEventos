@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppEventos.MainPage"
+             Title="Cadastro de Evento"
+             BackgroundColor="#F4F6FF">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="14">
+
+            <!-- Cabeçalho -->
+            <Border BackgroundColor="#2C3E8C"
+                    Padding="20,16"
+                    Margin="0,0,0,4">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="14"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="🎯 Cadastro de Eventos"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Preencha os dados do seu evento"
+                           FontSize="12"
+                           TextColor="#A8B8F0"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Card: Informações do Evento -->
+            <Border BackgroundColor="White"
+                    Stroke="#D0D8F5"
+                    StrokeThickness="1"
+                    Padding="16">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="10">
+
+                    <Label Text="📋 Informações do Evento"
+                           FontSize="15"
+                           FontAttributes="Bold"
+                           TextColor="#2C3E8C"/>
+                    <BoxView HeightRequest="1" Color="#E8EDFB"/>
+
+                    <Label Text="Nome do Evento:" FontSize="13" TextColor="#555"/>
+                    <Entry x:Name="txt_nome"
+                           Placeholder="Ex: Congresso de Tecnologia 2026"
+                           BackgroundColor="#F7F9FF"
+                           TextColor="#222"
+                           PlaceholderColor="#AAA"/>
+
+                    <Label Text="Local do Evento:" FontSize="13" TextColor="#555"/>
+                    <Entry x:Name="txt_local"
+                           Placeholder="Ex: Centro de Convenções SP"
+                           BackgroundColor="#F7F9FF"
+                           TextColor="#222"
+                           PlaceholderColor="#AAA"/>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Card: Datas -->
+            <Border BackgroundColor="White"
+                    Stroke="#D0D8F5"
+                    StrokeThickness="1"
+                    Padding="16">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="10">
+
+                    <Label Text="📅 Período do Evento"
+                           FontSize="15"
+                           FontAttributes="Bold"
+                           TextColor="#2C3E8C"/>
+                    <BoxView HeightRequest="1" Color="#E8EDFB"/>
+
+                    <Label Text="Data de Início:" FontSize="13" TextColor="#555"/>
+                    <DatePicker x:Name="dp_inicio"
+                                Format="dd/MM/yyyy"
+                                MinimumDate="01/01/2026"
+                                DateSelected="OnDataChanged"
+                                BackgroundColor="#F7F9FF"/>
+
+                    <Label Text="Data de Término:" FontSize="13" TextColor="#555"/>
+                    <DatePicker x:Name="dp_termino"
+                                Format="dd/MM/yyyy"
+                                MinimumDate="01/01/2026"
+                                DateSelected="OnDataChanged"
+                                BackgroundColor="#F7F9FF"/>
+
+                    <!-- Preview duração em tempo real -->
+                    <Border x:Name="border_duracao"
+                            BackgroundColor="#EEF1FD"
+                            Padding="10,8"
+                            IsVisible="False">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8"/>
+                        </Border.StrokeShape>
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="⏱️ Duração:" FontSize="13" TextColor="#2C3E8C" VerticalOptions="Center"/>
+                            <Label x:Name="lbl_duracao_preview"
+                                   FontSize="13"
+                                   FontAttributes="Bold"
+                                   TextColor="#2C3E8C"
+                                   VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Border>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Card: Participantes e Custo -->
+            <Border BackgroundColor="White"
+                    Stroke="#D0D8F5"
+                    StrokeThickness="1"
+                    Padding="16">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="10">
+
+                    <Label Text="👥 Participantes e Custo"
+                           FontSize="15"
+                           FontAttributes="Bold"
+                           TextColor="#2C3E8C"/>
+                    <BoxView HeightRequest="1" Color="#E8EDFB"/>
+
+                    <!-- Número de participantes via Stepper -->
+                    <Label Text="Número de Participantes:" FontSize="13" TextColor="#555"/>
+                    <HorizontalStackLayout Spacing="14" VerticalOptions="Center">
+                        <Stepper x:Name="stp_participantes"
+                                 Minimum="1"
+                                 Maximum="500"
+                                 Increment="1"
+                                 Value="1"
+                                 ValueChanged="OnParticipantesChanged"/>
+                        <Label x:Name="lbl_participantes"
+                               Text="1 participante"
+                               FontSize="13"
+                               FontAttributes="Bold"
+                               TextColor="#2C3E8C"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <!-- Custo por participante -->
+                    <Label Text="Custo por Participante (R$):" FontSize="13" TextColor="#555"/>
+                    <Entry x:Name="txt_custo"
+                           Placeholder="0,00"
+                           Keyboard="Numeric"
+                           BackgroundColor="#F7F9FF"
+                           TextColor="#222"
+                           PlaceholderColor="#AAA"
+                           TextChanged="OnCustoChanged"/>
+
+                    <!-- Preview custo total em tempo real -->
+                    <Border x:Name="border_custo"
+                            BackgroundColor="#EEF1FD"
+                            Padding="10,8"
+                            IsVisible="False">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8"/>
+                        </Border.StrokeShape>
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="💰 Total estimado:"
+                                   FontSize="13" TextColor="#2C3E8C" VerticalOptions="Center"/>
+                            <Label x:Name="lbl_custo_preview"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="#2C3E8C"
+                                   VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Border>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Botão Cadastrar -->
+            <Button Text="Cadastrar Evento →"
+                    Clicked="Button_Cadastrar_Clicked"
+                    BackgroundColor="#2C3E8C"
+                    TextColor="White"
+                    CornerRadius="10"
+                    FontAttributes="Bold"
+                    HeightRequest="50"
+                    Margin="0,6,0,0"/>
+
+            <!-- Botão Sobre -->
+            <Button Text="Sobre o App"
+                    Clicked="Button_Sobre_Clicked"
+                    BackgroundColor="Transparent"
+                    TextColor="#2C3E8C"
+                    BorderColor="#2C3E8C"
+                    BorderWidth="1"
+                    CornerRadius="10"
+                    Margin="0,0,0,20"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
